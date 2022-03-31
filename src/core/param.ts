@@ -16,7 +16,7 @@ export class Param {
 
   public mesh = {
     rate:{value:0, min:0, max:100},
-    ang:{value:0, min:0, max:360 * 1},
+    ang:{value:65, min:0, max:360 * 1},
   }
 
   constructor() {

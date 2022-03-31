@@ -142,12 +142,12 @@ export class Item extends MyObject3D {
         nextTranslate[pKey*3+1] = nextP.y
         nextTranslate[pKey*3+2] = 0
 
-        const dx = p.x - this._imgSize * 0.5
-        const dy = p.y - this._imgSize * 0
+        const dx = p.x
+        const dy = p.y
 
         info[pKey*3+0] = Util.instance.map(i, 0, 1, 0, num - 1)
         info[pKey*3+1] = Math.sqrt(dx * dx + dy * dy)
-        info[pKey*3+2] = 1
+        info[pKey*3+2] = Util.instance.range(1)
 
         pKey++
         i++
@@ -178,13 +178,20 @@ export class Item extends MyObject3D {
       const ang = Param.instance.ang;
       const one = 360;
       const d = one / Conf.instance.ITEM_NUM;
-      const rate = Util.instance.map(ang, 0, 1, this._id * (d * 0.75), this._id * d + d);
+      const offset = 0.05
+      const rate = Util.instance.map(ang, 0, 1, Math.max(0, this._id * d - d * 0.25), this._id * d + d);
 
       // const rate = Param.instance.mesh.rate.value * 0.01
 
-      const show = Util.instance.map(rate, 0, 1, 0, 0.45)
-      const hide = Util.instance.map(rate, 0, 1, 0.55, 1)
+
+      const show = Util.instance.map(rate, 0, 1, 0, 0.5 - offset)
+      const hide = Util.instance.map(rate, 0, 1, 0.5 + offset, 1)
       let yure = (1 - show) + (hide)
+      if(show > 0.9 && hide <= 0) {
+        yure = 0
+      } else {
+        yure = (1 - show) + (hide)
+      }
 
       // const colA = this._id == 0 ? this._color[Conf.instance.ITEM_NUM - 1] : this._color[this._id - 1]
       // const colB = this._id == Conf.instance.ITEM_NUM - 1 ? this._color[0] : this._color[this._id + 1]

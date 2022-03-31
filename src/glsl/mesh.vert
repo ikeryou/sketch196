@@ -46,9 +46,9 @@ void main(){
   vec3 prevP = prevPosition;
   vec3 nextP = nextPosition;
 
-  vec2 t = (time * 1.0 * info.z + info.xy) * 0.005;
-  float n2 = snoise(t) * 5.0;
-  float n1 = time * 0.1;
+  // vec2 t = (time * 0.01 + p.xy * 0.001);
+  // float n2 = snoise(t) * 100.0;
+  float n1 = time * 0.1 + info.y * 10.05;
 
   p.x = mix(prevP.x, p.x, show);
   p.y = mix(prevP.y, p.y, show);
@@ -56,11 +56,13 @@ void main(){
   p.x = mix(p.x, nextP.x, hide);
   p.y = mix(p.y, nextP.y, hide);
 
-  float radius = 100.0 * n2;
-  p.z += sin(n1) * radius * yure;
-  p.x += cos(n1) * radius * yure * 0.5;
-  p.y += cos(n1 * 2.0) * radius * yure * 0.02;
-  // p.y *= mix(0.1, 1.0, 1.0 - yure);
+  float radius = (2.0 * info.y);
+  p.z += (-radius * yure) + sin(n1) * radius * yure;
+  p.x += cos(n1) * radius * yure;
+
+
+  // p.y += cos(n1 * 2.0) * radius * yure * 0.02;
+  // p.y *= mix(0.2, 1.0, 1.0 - yure);
 
   // p = rotate(p, (move.x * 0.2) * info.y * 0.01, vec3(0.0, 0.0, 1.0));
 
